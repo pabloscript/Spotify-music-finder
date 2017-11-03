@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
+import './Gallery.css';
 
 class Gallery extends Component {
-    render() {
-        console.log(this.props);
+    render() {        
         const { tracks } = this.props;
         return (
-            <div>
+            <div className="Gallery-wrapper">
                 {tracks.map((track, k) => {
                     const trackImg = track.album.images[0].url;
                     return (
