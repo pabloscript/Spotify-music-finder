@@ -17,7 +17,7 @@ class App extends Component {
   search() {
     const BASE_URL = 'https://api.spotify.com/v1/search?';
     let FETCH_URL = `${BASE_URL}q=${this.state.query}&type=artist&limit=1`;
-    const accessToken = 'BQDU7dQwV57uqE4N8pSfnMWPFPhcxaoaW8mQ_0iD6Q0U4QgI4e2yBNFs9MqEr4qUhQ4sfTHnt8Kh2NpfH_QlFtT2HAcs3ZndgUhNgbi75L0OVOG7FFRI21MErKWLlHZbW8sVPEQenPvL3KfayOtyo3T-JhGaJAfg&refresh_token=AQAvaZaDsAGTOe4tFcX4pVmOtEzrstgfJHvGbUF2MwFFwnZvjVuN9or1IuXtgLxJLg-KMK-7OxtcPKuyOb4mJy2zEt8NO5pRym36vXpNIWRDIo4HaTsUOh0uc37VFH8PTbI';
+    const accessToken = 'BQASROooqU6rE8BUqsHKJ19qoqSX9Phd7LnPJzJVq7lo4oEds_F-EV7hsG5uhXal41zYbAql5MfqTxRNPvuX08ozdXyOnuZ7aLK0qE94TUQrkmZ19JT62b6t-Ml7ABYAodEnklOUwsQk8boFE45J1J1IXHbd6Ohc&refresh_token=AQAFyOqi6HNU7gKi2KHKtejrIy6NZAhyvyf2lUQ6uiRoRCT_jYwZQ6eSz-h8GmwfyC4qrLfwWCplsZWgf9kFcNkotf-aoEw7CRMN_j43fFKere0ztD3AbdQaFQYxsvF8__w';
     console.log(FETCH_URL);
     const ALBUM_URL = 'https://api.spotify.com/v1/artists/';
 
@@ -43,14 +43,15 @@ class App extends Component {
       .then(response => response.json())
       .then(json => {
         const artist = json.artists.items[0];
-        this.setState({artist});
+        this.setState({ artist });
 
         FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=PL&`
         fetch(FETCH_URL, fetchTopTracks)
           .then(response => response.json())
-          .then(json => {console.log(json)})
-          const { tracks } = json;
-          this.setState({tracks});
+          .then(json => {
+            const { tracks } = json;
+            this.setState({ tracks });
+          })
       })
   }
 
@@ -63,29 +64,29 @@ class App extends Component {
             <FormControl
               type="text"
               placeholder="Search for an Artist"
-              value={this.state.query}
-              onChange={e => {this.setState({query: e.target.value})}}
-              onKeyPress={e => {
+              value={ this.state.query }
+              onChange={ e => { this.setState({ query: e.target.value }) } }
+              onKeyPress={ e => {
                 if (e.key === "Enter") {
                   this.search()
                 }
-              }}
+              } }
             />
-            <InputGroup.Addon onClick={() => this.search()}>
+            <InputGroup.Addon onClick={ () => this.search() }>
               <Glyphicon glyph="search"></Glyphicon>
             </InputGroup.Addon>
           </InputGroup>
         </FormGroup>
         {
           this.state.artist !== null
-          ?
-            <div>
-              <Profile artist={this.state.artist} />
-              <Gallery tracks={this.state.tracks} />
-            </div>          
-          :
-            <div></div>
-        }        
+            ?
+              <div>
+                <Profile artist={ this.state.artist } />
+                <Gallery tracks={ this.state.tracks } />
+              </div>
+            :
+              <div></div>
+        }
       </div>
     );
   }
